@@ -146,10 +146,14 @@ public class YoutubeVideo {
     }
 
     public File download(Format format, File outDir) throws IOException, YoutubeException {
+        return this.download(format, outDir, videoDetails.title());
+    }
+
+    public File download(Format format, File outDir, String videoName) throws IOException, YoutubeException {
         if (videoDetails.isLive() || (videoDetails.isLiveContent() && videoDetails.lengthSeconds() == 0))
             throw new YoutubeException.LiveVideoException("Can not download live stream");
 
-        File outputFile = getOutputFile(videoDetails, format, outDir);
+        File outputFile = getOutputFile(videoName, format, outDir);
 
         URL url = new URL(format.url());
         BufferedInputStream bis = new BufferedInputStream(url.openStream());

@@ -6,7 +6,7 @@
 
     <groupId>com.github.ikiulian</groupId>
     <artifactId>java-youtube-downloader</artifactId>
-    <version>2.2.0</version>
+    <version>3.0.0-SNAPSHOT</version>
 
     <name>Java youtube video and audio downloader</name>
     <description>Easy download youtube videos and audio with java</description>
@@ -22,6 +22,21 @@
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar-no-fork</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+        <!--<plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -52,9 +67,9 @@
                         </goals>
                         <phase>none</phase>
                         <configuration>
-                            <processStartTag>----------------------- LICENSE_START -----------------------
+                            <processStartTag>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; LICENSE_START -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
                             </processStartTag>
-                            <processEndTag>----------------------- LICENSE_END -----------------------
+                            <processEndTag>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45; LICENSE_END -&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;
                             </processEndTag>
                             <roots>
                                 <root>src/main/java</root>
@@ -72,7 +87,7 @@
                 <version>2.22.0</version>
             </plugin>
 
-        </plugins>
+        </plugins>-->
     </build>
 
     <dependencies>

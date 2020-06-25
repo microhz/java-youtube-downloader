@@ -33,4 +33,23 @@ class Utils {
 
         return outputFile;
     }
+
+    static File getOutputFile(String defineName, Format format, File outDir) throws IOException {
+        if (!outDir.exists()) {
+            boolean mkdirs = outDir.mkdirs();
+            if (!mkdirs)
+                throw new IOException("Could not create output directory: " + outDir);
+        }
+
+        String fileName = defineName + "." + format.extension().value();
+        File outputFile = new File(outDir, removeIllegalChars(fileName));
+
+        int i = 1;
+        while (outputFile.exists()) {
+            fileName = defineName + "(" + i++ + ")" + "." + format.extension().value();
+            outputFile = new File(outDir, removeIllegalChars(fileName));
+        }
+
+        return outputFile;
+    }
 }
