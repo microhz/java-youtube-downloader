@@ -23,6 +23,7 @@ package com.github.kiulian.downloader.model;
 
 import com.github.kiulian.downloader.OnYoutubeDownloadListener;
 import com.github.kiulian.downloader.YoutubeException;
+import com.github.kiulian.downloader.log.Logger;
 import com.github.kiulian.downloader.model.formats.AudioFormat;
 import com.github.kiulian.downloader.model.formats.AudioVideoFormat;
 import com.github.kiulian.downloader.model.formats.Format;
@@ -31,6 +32,7 @@ import com.github.kiulian.downloader.model.quality.AudioQuality;
 import com.github.kiulian.downloader.model.quality.VideoQuality;
 
 import java.io.*;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.LinkedList;
@@ -46,9 +48,15 @@ public class YoutubeVideo {
     private VideoDetails videoDetails;
     private List<Format> formats;
 
+    private Logger logger;
+
     public YoutubeVideo(VideoDetails videoDetails, List<Format> formats) {
         this.videoDetails = videoDetails;
         this.formats = formats;
+    }
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
     }
 
     public VideoDetails details() {
@@ -160,8 +168,13 @@ public class YoutubeVideo {
         FileOutputStream fis = new FileOutputStream(outputFile);
         byte[] buffer = new byte[4096];
         int count = 0;
+        double downloadedSize = 0;
         while ((count = bis.read(buffer, 0, 4096)) != -1) {
             fis.write(buffer, 0, count);
+            downloadedSize += 1;
+            if (logger != null && Double.valueOf(downloadedSize).intValue() % 5 == 0) {
+                logger.print(String.format("已下载 %s MB", new BigDecimal(downloadedSize * (4D / 1024D)).setScale(2, BigDecimal.ROUND_HALF_UP).doubleValue()));
+            }
         }
         fis.close();
         bis.close();

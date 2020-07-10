@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
@@ -41,6 +42,24 @@ class YoutubeDownloader_Tests {
 
         System.setProperty("https.proxyHost", proxyHost);
         System.setProperty("https.proxyPort", proxyPort);
+    }
+
+    @Test
+    public void highHD() throws IOException, YoutubeException {
+        YoutubeDownloader youtubeDownloader = new YoutubeDownloader();
+
+        YoutubeVideo video = youtubeDownloader.getVideo("nL1ADYo_be8");
+        List<Format> formats = video.formats();
+        Optional<Format> first = formats.stream().filter(e -> {
+            if (e instanceof VideoFormat) {
+                VideoFormat videoFormat = (VideoFormat) e;
+                return videoFormat.qualityLabel().contains("2160");
+            }
+            return false;
+        }).findFirst();
+        Format format = first.get();
+
+        video.download(format, new File("/Users/mapeichuan/Downloads/auto-earn-dowload/batch/"));
     }
 
     @Test
